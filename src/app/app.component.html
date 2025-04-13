@@ -1,0 +1,20 @@
+
+<nav class="navbar">
+    <a routerLink="/"><mat-icon>home</mat-icon> Főoldal</a>
+    <a routerLink="/termekek"><mat-icon>local_florist</mat-icon> Termékek</a>
+    <a routerLink="/velemenyek"><mat-icon>chat</mat-icon> Vélemények</a>
+    <a routerLink="/kosar" 
+        [matBadge]="kosarService.kosarLista.length > 0 ? kosarService.kosarLista.length : null" 
+        matBadgeColor="warn">
+        <mat-icon>shopping_cart</mat-icon> Kosár
+    </a>
+    <a routerLink="/profil"><mat-icon>person</mat-icon> Profil</a>
+    <a routerLink="/profil" *ngIf="!authService.getCurrentUser()">
+      <mat-icon>login</mat-icon> Bejelentkezés
+    </a>
+    <a (click)="kijelentkezes()" *ngIf="authService.getCurrentUser()">
+      <mat-icon>logout</mat-icon> Kijelentkezés
+    </a>
+  </nav>
+
+<router-outlet></router-outlet>

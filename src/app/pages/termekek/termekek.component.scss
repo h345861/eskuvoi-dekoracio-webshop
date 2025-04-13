@@ -1,0 +1,75 @@
+.termekek-container {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #fff0f5 0%, #f3e5f5 100%);
+  font-family: 'Segoe UI', sans-serif;
+
+  h2 {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #9c27b0;
+    margin-bottom: 2rem;
+  }
+
+  .termek-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+
+    .termek {
+      background: #ffffff;
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(186, 104, 200, 0.2);
+      width: 220px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(186, 104, 200, 0.3);
+      }
+
+      img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+        color: #6a1b9a;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #9c27b0;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .gombok {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        button {
+          background: linear-gradient(to right, #fcbfd3, #e468b0);
+          color: white;
+          border: none;
+          padding: 0.6rem;
+          border-radius: 30px;
+          font-weight: bold;
+          cursor: pointer;
+          transition: background 0.3s ease;
+
+          &:hover {
+            background: linear-gradient(to right, #e468b0, #fcbfd3);
+          }
+        }
+      }
+    }
+  }
+}

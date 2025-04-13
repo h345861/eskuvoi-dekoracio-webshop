@@ -1,0 +1,28 @@
+<div class="kosar-container">
+  <h2>🛒 Kosarad</h2>
+
+  <div *ngIf="kosar.length === 0" class="ures-kosar">
+    A kosarad üres.
+  </div>
+
+  <div *ngFor="let termek of kosar" class="kosar-item mat-elevation-z3">
+    <img [src]="termek.kep" alt="{{ termek.nev }}" width="200">
+    <h3>{{ termek.nev }}</h3>
+    <p>{{ termek.ar }} Ft × {{ termek.mennyiseg }} = <strong>{{ termek.ar * termek.mennyiseg }} Ft</strong></p>
+    <div class="gombok">
+      <button mat-mini-button color="primary" (click)="csokkent(termek)">−</button>
+      <button mat-mini-button color="primary" (click)="novel(termek)">+</button>
+      <button mat-mini-button color="warn" (click)="torol(termek)">❌ Törlés</button>
+    </div>
+  </div>
+
+  <div *ngIf="kosar.length > 0" class="hazhoz-toggle">
+    <mat-slide-toggle [(ngModel)]="hazhozSzallitas">
+      Házhoz szállítással kérem
+    </mat-slide-toggle>
+  </div>
+  
+  <div *ngIf="kosar.length > 0" class="rendeles-gomb">
+    <button mat-raised-button color="accent" (click)="leadRendeles()">✅ Rendelés leadása</button>
+  </div>
+</div>

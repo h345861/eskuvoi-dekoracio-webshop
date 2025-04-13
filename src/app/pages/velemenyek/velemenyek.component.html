@@ -1,0 +1,24 @@
+<div class="velemenyek-container">
+  <h2>Vásárlói vélemények</h2>
+
+  
+  <div class="velemeny-form">
+    <h3>Írj te is véleményt!</h3>
+    <input type="text" placeholder="Neved" [(ngModel)]="ujNev">
+    <textarea placeholder="Véleményed..." [(ngModel)]="ujSzoveg"></textarea>
+    <button (click)="hozzaszolasBekuldese()">Küldés</button>
+  </div>
+
+  
+  <div class="velemeny" *ngFor="let v of velemenyek">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ v.nev }}</mat-card-title>
+        <mat-card-subtitle>{{ v.datum | date }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ v.szoveg }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

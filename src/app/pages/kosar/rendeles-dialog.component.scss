@@ -1,0 +1,38 @@
+:host {
+    display: block;
+    background-color: #eb337f;
+    color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px magenta;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: magenta;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    color: #e1bee7; 
+  }
+  
+  button {
+    background: linear-gradient(to right, #ec407a, #ab47bc);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    margin-top: 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  
+    &:hover {
+      background: linear-gradient(to right, #ab47bc, #ec407a);
+    }
+  }
+  

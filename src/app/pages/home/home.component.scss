@@ -1,0 +1,35 @@
+
+.kezdo {
+  
+  background-image: url('/borito.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #880e4f;
+    text-shadow: 0 0 10px white, 0 0 20px white;
+    }
+  
+  p {
+    font-size: 1.4rem;
+    max-width: 600px;
+    color: #ffffff;
+  }
+}
+  

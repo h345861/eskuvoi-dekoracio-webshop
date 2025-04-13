@@ -1,0 +1,17 @@
+
+<div class="termekek-container">
+    <h2>Esküvői dekorációk</h2>
+    
+    <div class="termek-lista">
+      <div class="termek" *ngFor="let termek of termekek">
+        <img [src]="termek.kep" alt="termek.nev">
+        <h3>{{ termek.nev }}</h3>
+        <p>{{ termek.ar | forint }}</p>
+  
+        <div class="gombok">
+          <button mat-raised-button color="primary" (click)="kosarbaRak(termek)">Kosárba</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
