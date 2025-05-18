@@ -1,48 +1,46 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { KosarElem } from '../models/kosar.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KosarService {
-  
-  private kosar: any[] = [];
-  private kosarSubject = new BehaviorSubject<any[]>(this.kosar);
+  private kosar: KosarElem[] = [];
+  private kosarSubject = new BehaviorSubject<KosarElem[]>(this.kosar);
   kosar$ = this.kosarSubject.asObservable();
 
-
-  mennyisegNovel(termek: any) {
-    termek.mennyiseg++;
-    this.kosarSubject.next(this.kosar);
+  constructor(
+    private firestore: Firestore,
+    private authService: AuthService
+  ) {
+    this.betoltKosaratFirestorebol();
   }
 
+  private async betoltKosaratFirestorebol() {
+    const user = this.authService.getCurrentUser();
+    if (!user) return;
 
-  mennyisegCsokkent(termek: any) {
-    if (termek.mennyiseg > 1) {
-      termek.mennyiseg--;
-    } else {
-      this.torol(termek);
+    const docRef = doc(this.firestore, 'kosarak', user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      this.kosar = docSnap.data()['termekek'] || [];
+      this.kosarSubject.next(this.kosar);
     }
-    this.kosarSubject.next(this.kosar);
   }
 
+  private async mentsdKosaratFirestoreba() {
+    const user = this.authService.getCurrentUser();
+    if (!user) return;
 
-  torol(termek: any) {
-    this.kosar = this.kosar.filter(t => t !== termek);
-    this.kosarSubject.next(this.kosar);
+    const docRef = doc(this.firestore, 'kosarak', user.uid);
+    await setDoc(docRef, { termekek: this.kosar });
   }
 
-
-  urites() {
-    this.kosar = [];
-    this.kosarSubject.next(this.kosar);
-  }
-
-  getKosar(): any[] {
-    return this.kosar;
-  }
-  
-  hozzaad(termek: any) {
+  hozzaad(termek: KosarElem) {
     const letezo = this.kosar.find(t => t.id === termek.id);
     if (letezo) {
       letezo.mennyiseg += 1;
@@ -50,10 +48,43 @@ export class KosarService {
       this.kosar.push({ ...termek, mennyiseg: 1 });
     }
     this.kosarSubject.next(this.kosar);
+    this.mentsdKosaratFirestoreba();
   }
 
-  
-  get kosarLista() {
+  mennyisegNovel(termek: KosarElem) {
+    termek.mennyiseg++;
+    this.kosarSubject.next(this.kosar);
+    this.mentsdKosaratFirestoreba();
+  }
+
+  mennyisegCsokkent(termek: KosarElem) {
+    if (termek.mennyiseg > 1) {
+      termek.mennyiseg--;
+    } else {
+      this.torol(termek);
+      return; // mert torol már menti
+    }
+    this.kosarSubject.next(this.kosar);
+    this.mentsdKosaratFirestoreba();
+  }
+
+  torol(termek: KosarElem) {
+    this.kosar = this.kosar.filter(t => t.id !== termek.id);
+    this.kosarSubject.next(this.kosar);
+    this.mentsdKosaratFirestoreba();
+  }
+
+  urites() {
+    this.kosar = [];
+    this.kosarSubject.next(this.kosar);
+    this.mentsdKosaratFirestoreba();
+  }
+
+  getKosar(): KosarElem[] {
+    return this.kosar;
+  }
+
+  get kosarLista(): KosarElem[] {
     return this.kosar;
   }
 }

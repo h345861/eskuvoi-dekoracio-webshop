@@ -45,30 +45,33 @@ export class KosarComponent {
   
   
   leadRendeles() {
-    const user = this.authService.getCurrentUser();
-    if (!user) {
-      alert('A rendeléshez előbb be kell jelentkezned!');
-      return;
-    }
-
-    if (this.kosar.length === 0) {
-      alert('A kosarad üres!');
-      return;
-    }
-
-    const rendelesek = this.kosar.map(termek => ({
-      ...termek,
-      hazhozszallitas: this.hazhozSzallitas 
-    }));
-
-    if (!user.rendelesek) {
-      user.rendelesek = [];
-    }
-  
-
-    this.authService.addRendelesek(rendelesek);
-    this.kosarService.urites();
-    
-    this.dialog.open(RendelesDialogComponent);
+  const user = this.authService.getCurrentUser();
+  if (!user) {
+    alert('A rendeléshez előbb be kell jelentkezned!');
+    return;
   }
+
+  if (this.kosar.length === 0) {
+    alert('A kosarad üres!');
+    return;
+  }
+
+  const validTermekek = this.kosar.map(t => ({
+  nev: t.nev ?? 'ismeretlen',
+  ar: t.ar ?? 0,
+  mennyiseg: t.mennyiseg ?? 1,
+  hazhozszallitas: this.hazhozSzallitas,
+  kepUrl: t.kep ?? ''
+}));
+
+  this.authService.addRendeles(validTermekek)
+    .then(() => {
+      this.kosarService.urites();
+      this.dialog.open(RendelesDialogComponent);
+    })
+    .catch(err => {
+      console.error('Hiba a rendelés mentésekor:', err);
+      alert('Hiba történt a rendelés mentésekor.');
+    });
+}
 }

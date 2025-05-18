@@ -1,4 +1,3 @@
-
 :host {
   display: block;
   min-height: 100vh;
@@ -8,93 +7,6 @@
   background-repeat: no-repeat;
   padding: 2rem;
 }
-.profil-container {
-  max-width: 420px;
-  margin: 4rem auto;
-  padding: 2.5rem;
-  background: linear-gradient(145deg, #e0bcd4, #f093ba);
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(255, 0, 144, 0.6);
-  color: #fff;
-  font-family: 'Segoe UI', sans-serif;
-  animation: fadeIn 0.6s ease;
-
-  .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 2rem;
-
-    button {
-      padding: 0.6rem 1.2rem;
-      background: none;
-      border: 2px solid #ec407a;
-      color: #ec407a;
-      border-radius: 30px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-
-      &.active,
-      &:hover {
-        background: #ec407a;
-        color: white;
-        box-shadow: 0 0 10px #ec407a;
-      }
-    }
-  }
-
-  .form-box {
-    display: flex;
-    flex-direction: column;
-
-    h2 {
-      text-align: center;
-      color: #f00d59;
-      margin-bottom: 1rem;
-    }
-
-    label {
-      margin-top: 1rem;
-      font-weight: 500;
-      color: #ffffff;
-    }
-
-    input {
-      padding: 0.5rem;
-      border: 1px solid #c868a0;
-      background: #d6a6c2;
-      border-radius: 8px;
-      color: #fff;
-      margin-top: 0.3rem;
-      transition: border 0.3s ease;
-
-      &:focus {
-        border-color: #ec407a;
-        outline: none;
-      }
-    }
-
-
-    button[type='submit'] {
-      margin-top: 2rem;
-      padding: 0.7rem;
-      background: linear-gradient(to right, #fcbfd3, #e468b0);
-      color: white;
-      border: none;
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px #ab47bc;
-      transition: background 0.3s ease;
-
-      &:hover {
-        background: linear-gradient(to right, #e468b0, #fcbfd3);
-      }
-    }
-  }
-}
-
 .profil-box {
   max-width: 600px;
   margin: 4rem auto;

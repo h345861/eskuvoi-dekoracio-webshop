@@ -1,47 +1,74 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Rendeles } from '../../models/rendeles.model'; 
+import { DatumPipe } from '../../pipes/datum.pipe';
+import { ProfilService } from '../../services/profil.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   templateUrl: './profil.component.html',
   styleUrls: ['./profil.component.scss'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, DatumPipe]
 })
-export class ProfilComponent {
-  view: 'login' | 'register' = 'login';
+export class ProfilComponent implements OnInit {
 
-  loginData = { email: '', password: '' };
-  registerData = { name: '', email: '', password: '' };
+  rendelesek: Rendeles[] = [];
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private profilService: ProfilService) {}
 
-  setView(view: 'login' | 'register') {
-    this.view = view;
-  }
-
-  onLogin() {
-    const success = this.authService.login(this.loginData.email, this.loginData.password);
-    if (success) {
-    } else {
-      alert('Hibás email vagy jelszó!');
+  ngOnInit() {
+    const user = this.authService.getCurrentUser();
+    if (user) {
+      this.loadRendelesek();
     }
   }
 
-  onRegister() {
-    const success = this.authService.register(
-      this.registerData.name,
-      this.registerData.email,
-      this.registerData.password
-    );
+  async loadRendelesek() {
+    const user = this.authService.getCurrentUser();
+    if (!user) return;
+    this.rendelesek = await this.profilService.lekerRendelesek(user.uid);
+  }
 
-    if (success) {
-      alert('Sikeres regisztráció! Most már be tudsz jelentkezni.');
-      this.setView('login');
+  ujEmail: string = '';
+  ujJelszo: string = '';
+  jelenlegiJelszo: string = '';
+  ujNev: string = '';
+
+  async profilTorles() {
+    const megerosites = confirm('Biztosan törölni szeretnéd a profilodat? Ez nem visszavonható.');
+    if (!megerosites) return;
+
+    const siker = await this.authService.torolFelhasznalo();
+    if (siker) {
+      alert('Profil sikeresen törölve.');
+      window.location.href = '/';
     } else {
-      alert('Ez az email cím már foglalt.');
+      alert('Hiba történt a profil törlésekor.');
+    }
+  }
+
+  async modositJelszo() {
+    const siker = await this.authService.jelszoModositas(this.jelenlegiJelszo, this.ujJelszo);
+    if (siker) {
+      this.ujJelszo = '';
+      this.jelenlegiJelszo = '';
+    }
+  }
+
+  async modositNevet() {
+    const user = this.authService.getCurrentUser();
+    if (!user || !this.ujNev.trim()) return;
+
+    try {
+      await this.profilService.frissitNev(user.uid, this.ujNev);
+      alert('Név módosítva.');
+      this.ujNev = '';
+    } catch (err) {
+      console.error('Név módosítás hiba:', err);
+      alert('Nem sikerült a nevet módosítani.');
     }
   }
 }

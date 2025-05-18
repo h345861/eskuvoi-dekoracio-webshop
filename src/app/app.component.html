@@ -15,6 +15,10 @@
     <a (click)="kijelentkezes()" *ngIf="authService.getCurrentUser()">
       <mat-icon>logout</mat-icon> Kijelentkezés
     </a>
+    <a routerLink="/statisztika">
+      <mat-icon>bar_chart</mat-icon>
+      Statisztika
+    </a>
   </nav>
 
 <router-outlet></router-outlet>

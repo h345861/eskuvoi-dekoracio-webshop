@@ -11,14 +11,22 @@
 
   
   <div class="velemeny" *ngFor="let v of velemenyek">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ v.nev }}</mat-card-title>
-        <mat-card-subtitle>{{ v.datum | date }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ v.nev }}</mat-card-title>
+      <mat-card-subtitle>{{ v.datum | datum }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="szerkesztesId === v.id; else normal">
+        <textarea [(ngModel)]="szerkesztettSzoveg"></textarea>
+        <button (click)="ment(v)">Mentés</button>
+      </div>
+      <ng-template #normal>
         <p>{{ v.szoveg }}</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
+        <button *ngIf="isSajat(v)" (click)="szerkeszt(v)">Szerkesztés</button>
+        <button *ngIf="isSajat(v)" (click)="torol(v)">Törlés</button>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>
